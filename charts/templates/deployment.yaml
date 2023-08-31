@@ -33,6 +33,27 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: ST_SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: stallion-charts
+                  key: ST_SERVER_PORT
+            - name: ST_METRICS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: stallion-charts
+                  key: ST_METRICS_PORT
+            - name: ST_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: stallion-charts
+                  key: ST_USER
+            - name: ST_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: stallion-charts
+                  key: ST_PASSWORD
           ports:
             - name: http
               containerPort: 80
